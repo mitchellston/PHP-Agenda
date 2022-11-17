@@ -2,24 +2,32 @@ import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
 import { createMutation } from "@tanstack/solid-query";
 import Styles from "./SCSS/Login.module.scss";
-type registerResponse = {
+import axios from "axios";
+import { useNavigate } from "@solidjs/router";
+type response = {
   Success: boolean;
   error?: {
     title: string;
     message: string;
   };
 };
-const registerMutation = async (): Promise<registerResponse> => {
-  return {
-    Success: false,
-    error: {
-      title: "email",
-      message: "OMG",
-    },
-  };
+const registerMutation = async (): Promise<response> => {
+  try {
+    const data: response = await (await axios.post("")).data;
+    return data;
+  } catch (err) {
+    return {
+      Success: false,
+      error: {
+        title: "FETCH FAILED",
+        message: "Geen antwoord van de server probeer het later opnieuw!",
+      },
+    };
+  }
 };
 
 const App: Component = () => {
+  const navigate = useNavigate();
   let email!: HTMLInputElement;
   let password!: HTMLInputElement;
   let confirmPassword!: HTMLInputElement;
@@ -120,6 +128,16 @@ const App: Component = () => {
               <button type="submit" tabindex={4} onClick={register}>
                 Login
               </button>
+            </div>
+            <div class={Styles.ChangePage}>
+              <a
+                tabindex={5}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Login
+              </a>
             </div>
           </form>
         </div>

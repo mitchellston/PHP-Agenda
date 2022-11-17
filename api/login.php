@@ -41,6 +41,13 @@ try {
         echo json_encode(["Success" => false, "error" => ["title" => "PASSWORD", "message" => "Er zit een fout in uw password!"]]);
         exit;
     }
+    $loginToken = substr(str_shuffle(str_repeat($x = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10 / strlen($x)))), 1, 10);
+    $databaseConnection->update(
+        "Users",
+        [["column" => "LoginToken", "value" => ["value" => $loginToken, "type" => PropertyTypes::string]]],
+        [["column" => "ID", "method" => CompareMethods::equals, "value" => ["value" => $result[0]["ID"], "type" => PropertyTypes::int]]]
+    );
+    $_SESSION["LoginToken"] = $loginToken;
     $_SESSION["User"] = $result[0]['ID'];
     echo json_encode(["Success" => true]);
 

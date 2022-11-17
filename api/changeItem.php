@@ -7,7 +7,6 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./config.php";
     require_once "./loggedinConfig.php";
     $id = new Validation(
         "ID", Methods::POST, Types::NUMBER,
@@ -19,7 +18,7 @@ try {
         "subject", Methods::POST, Types::TEXT,
         [
             Attributes::required => ["value" => "", "errorMessage" => "Er moet een onderwerp zijn!"],
-            Attributes::maxLength => ["value" => 50, "errorMessage" => "Het onderwerp mag maximaal 50 karakters zijn!"]
+            Attributes::maxLength => ["value" => 30, "errorMessage" => "Het onderwerp mag maximaal 30 karakters zijn!"]
         ]
     );
     $content = new Validation(

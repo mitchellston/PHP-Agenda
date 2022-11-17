@@ -2,51 +2,76 @@
   position: fixed;
   width: 100vw;
   max-width: 100vw;
-  display: grid;
-  margin: min(2%, 10px);
-  grid-template-columns: auto 1fr auto;
-  .left {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    display: grid;
-    height: 25px;
-    grid-template-columns: 35px 35px;
-    gap: 7px;
+  margin-top: min(2%, 10px);
+  .Content {
+    position: relative;
+    width: 100%;
+
+    max-width: 100%;
     .left {
-      border-radius: 5px 0px 0px 5px;
-    }
-    .right {
-      border-radius: 0px 5px 5px 0px;
-    }
-    a {
-      padding: 5px 5px 5px 5px;
-      background-color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 90%;
-        height: 90%;
+      margin-left: min(2%, 10px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: grid;
+      height: 25px;
+      grid-template-columns: 35px 35px;
+      gap: 5px;
+      .left {
+        border-radius: 5px 0px 0px 5px;
+      }
+      .right {
+        border-radius: 0px 5px 5px 0px;
+      }
+      a {
+        @media (prefers-color-scheme: dark) {
+          background-color: #252639;
+        }
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        cursor: pointer;
+        padding: 5px 5px 5px 5px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          @media (prefers-color-scheme: dark) {
+            filter: invert(1);
+          }
+          width: 90%;
+          height: 90%;
+        }
       }
     }
-  }
 
-  .right {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    display: grid;
-    height: 25px;
-    grid-template-columns: 35px 35px;
-    gap: 7px;
-    > a {
-      border-radius: 5px;
-
-      padding: 5px 5px 5px 5px;
-      background-color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 90%;
-        height: 90%;
+    .right {
+      margin-right: min(2%, 10px);
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: grid;
+      height: 25px;
+      grid-template-columns: 35px;
+      gap: 7px;
+      > a {
+        @media (prefers-color-scheme: dark) {
+          background-color: #252639;
+        }
+        border-radius: 5px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        cursor: pointer;
+        padding: 5px 5px 5px 5px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          @media (prefers-color-scheme: dark) {
+            filter: invert(1);
+          }
+          width: 90%;
+          height: 90%;
+        }
       }
     }
   }

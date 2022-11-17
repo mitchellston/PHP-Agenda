@@ -1,0 +1,42 @@
+.ViewPort {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Content {
+    @media (prefers-color-scheme: dark) {
+      color: #f6f7f5;
+      background-color: #252639;
+    }
+    .Error {
+      color: red;
+      text-align: center;
+    }
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    width: min(100%, 480px);
+
+    h1 {
+      margin: 2% 0%;
+      text-align: center;
+    }
+    .Buttons {
+      height: 30px;
+      display: flex;
+      .Left {
+        border-bottom-left-radius: 10px;
+      }
+      .Right {
+        border-bottom-right-radius: 10px;
+      }
+      button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

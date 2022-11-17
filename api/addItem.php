@@ -6,13 +6,12 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./config.php";
     require_once "./loggedinConfig.php";
     $subject = new Validation(
         "subject", Methods::POST, Types::TEXT,
         [
             Attributes::required => ["value" => "", "errorMessage" => "Er moet een onderwerp zijn!"],
-            Attributes::maxLength => ["value" => 50, "errorMessage" => "Het onderwerp mag maximaal 50 karakters zijn!"]
+            Attributes::maxLength => ["value" => 30, "errorMessage" => "Het onderwerp mag maximaal 30 karakters zijn!"]
         ]
     );
     $content = new Validation(
@@ -21,23 +20,29 @@ try {
     );
     $beginDate = new Validation(
         "beginDate", Methods::POST, Types::DATE,
-        []
+        [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een begin datum zijn!"],
+        ]
     );
     $endDate = new Validation(
         "endDate", Methods::POST, Types::DATE,
-        []
+        [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een eind datum zijn!"],
+        ]
     );
     $priority = new Validation(
         "priority", Methods::POST, Types::NUMBER,
         [
             Attributes::min => ["value" => 0, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"],
-            Attributes::max => ["value" => 6, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"]
+            Attributes::max => ["value" => 6, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"],
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een prioriteit zijn!"],
         ]
     );
     $status = new Validation(
         "status", Methods::POST, Types::NUMBER,
         [
-            Attributes::pattern => ["value" => "/(?=.*?[nbaNBA]).{0,}/", "errorMessage" => "De status moet 'n', 'b' of 'a' zijn!"]
+            Attributes::pattern => ["value" => "/(?=.*?[nbaNBA]).{0,}/", "errorMessage" => "De status moet 'n', 'b' of 'a' zijn!"],
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een status zijn!"],
         ]
     );
     $errors = array_merge($subject->getErrors(), $content->getErrors(), $beginDate->getErrors(), $endDate->getErrors(), $priority->getErrors(), $status->getErrors());

@@ -43,6 +43,7 @@ try {
         echo json_encode(["Success" => false, "error" => ["title" => "EMAIL", "message" => "Het e-mailadres dat u mee heeft geprobeerd te registreren heeft al een account!"]]);
         exit;
     }
+    $loginToken = substr(str_shuffle(str_repeat($x = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10 / strlen($x)))), 1, 10);
     $generatedSalt = substr(str_shuffle(str_repeat($x = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10 / strlen($x)))), 1, 10);
     $hashedPassword = password_hash($password->getValue() . $generatedSalt, PASSWORD_BCRYPT, ["cost" => 12]);
     $result = $databaseConnection->insert(
@@ -51,6 +52,7 @@ try {
             ["column" => "Email", "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]],
             ["column" => "Salt", "value" => ["value" => $generatedSalt, "type" => PropertyTypes::string]],
             ["column" => "Password", "value" => ["value" => $generatedSalt, "type" => PropertyTypes::string]],
+            ["column" => "LoginToken", "value" => ["value" => $loginToken, "type" => PropertyTypes::string]]
         ]
     );
     $result = $databaseConnection->select([], "Gebruikers", [["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]]);
@@ -58,6 +60,7 @@ try {
         echo json_encode(["Success" => false, "error" => ["title" => "...", "message" => "Er ging iets fout probeer het later opnieuw!"]]);
         exit;
     }
+    $_SESSION["LoginToken"] = $loginToken;
     $_SESSION["User"] = $result[0]["ID"];
     echo json_encode(["Success" => true]);
 
