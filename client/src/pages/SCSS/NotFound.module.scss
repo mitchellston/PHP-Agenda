@@ -1,0 +1,17 @@
+.ViewPort {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Notification {
+    width: min(100%, 250px);
+    height: min(100%, 150px);
+    border-radius: 15px;
+    background-color: rgb(184, 3, 3);
+    .Message {
+      color: white;
+      margin: 5%;
+    }
+  }
+}
