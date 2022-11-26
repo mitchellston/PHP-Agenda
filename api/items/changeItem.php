@@ -7,7 +7,8 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./loggedinConfig.php";
+    require_once "../config.php";
+    require_once "../loggedinConfig.php";
     $id = new Validation(
         "ID", Methods::POST, Types::NUMBER,
         [
@@ -22,7 +23,7 @@ try {
         ]
     );
     $content = new Validation(
-        "subject", Methods::POST, Types::TEXT,
+        "content", Methods::POST, Types::TEXT,
         []
     );
     $beginDate = new Validation(

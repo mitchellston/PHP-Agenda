@@ -7,7 +7,7 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./config.php";
+    require_once "../config.php";
     $email = new Validation(
         "email", Methods::POST, Types::EMAIL,
         [
@@ -38,8 +38,8 @@ try {
         echo json_encode(["Success" => false, "error" => ["title" => "PASSWORDEN", "message" => "De passworden die u heeft ingevoerd zijn niet hetzelfde probeer het overnieuw!"]]);
         exit;
     }
-    $result = $databaseConnection->select([], "Gebruikers", [["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]]);
-    if ($result == null) {
+    $result = $databaseConnection->select([], "users", [["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]]);
+    if ($result != null) {
         echo json_encode(["Success" => false, "error" => ["title" => "EMAIL", "message" => "Het e-mailadres dat u mee heeft geprobeerd te registreren heeft al een account!"]]);
         exit;
     }
@@ -51,11 +51,11 @@ try {
         [
             ["column" => "Email", "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]],
             ["column" => "Salt", "value" => ["value" => $generatedSalt, "type" => PropertyTypes::string]],
-            ["column" => "Password", "value" => ["value" => $generatedSalt, "type" => PropertyTypes::string]],
+            ["column" => "Password", "value" => ["value" => $hashedPassword, "type" => PropertyTypes::string]],
             ["column" => "LoginToken", "value" => ["value" => $loginToken, "type" => PropertyTypes::string]]
         ]
     );
-    $result = $databaseConnection->select([], "Gebruikers", [["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]]);
+    $result = $databaseConnection->select([], "users", [["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]]);
     if ($result == null) {
         echo json_encode(["Success" => false, "error" => ["title" => "...", "message" => "Er ging iets fout probeer het later opnieuw!"]]);
         exit;

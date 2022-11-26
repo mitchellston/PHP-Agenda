@@ -6,7 +6,8 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./loggedinConfig.php";
+    require_once "../config.php";
+    require_once "../loggedinConfig.php";
     $subject = new Validation(
         "subject", Methods::POST, Types::TEXT,
         [
@@ -21,13 +22,11 @@ try {
     $beginDate = new Validation(
         "beginDate", Methods::POST, Types::DATE,
         [
-            Attributes::required => ["value" => "", "errorMessage" => "Er moet een begin datum zijn!"],
         ]
     );
     $endDate = new Validation(
         "endDate", Methods::POST, Types::DATE,
         [
-            Attributes::required => ["value" => "", "errorMessage" => "Er moet een eind datum zijn!"],
         ]
     );
     $priority = new Validation(
