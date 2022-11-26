@@ -7,7 +7,8 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./loggedinConfig.php";
+    require_once "../config.php";
+    require_once "../loggedinConfig.php";
     $id = new Validation(
         "ID", Methods::POST, Types::NUMBER,
         [

@@ -8,7 +8,7 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./config.php";
+    require_once "../config.php";
     $email = new Validation(
         "email", Methods::POST, Types::EMAIL,
         [

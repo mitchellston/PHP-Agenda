@@ -4,7 +4,8 @@ use dbHandler\PropertyTypes;
 
 
 try {
-    require_once "./loggedinConfig.php";
+    require_once "../config.php";
+    require_once "../loggedinConfig.php";
     $result = $databaseConnection->update(
         "users",
         [

@@ -7,9 +7,10 @@ use FormValidation\Types;
 use FormValidation\Validation;
 
 try {
-    require_once "./loggedinConfig.php";
+    require_once "../config.php";
+    require_once "../loggedinConfig.php";
     $id = new Validation(
-        "id", Methods::POST, Types::NUMBER,
+        "ID", Methods::POST, Types::NUMBER,
         [
             Attributes::min => ["value" => 0, "errorMessage" => "Het ID kan niet kleiner dan 0 zijn!"]
         ]
