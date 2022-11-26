@@ -47,7 +47,7 @@ try {
     $generatedSalt = substr(str_shuffle(str_repeat($x = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10 / strlen($x)))), 1, 10);
     $hashedPassword = password_hash($password->getValue() . $generatedSalt, PASSWORD_BCRYPT, ["cost" => 12]);
     $result = $databaseConnection->insert(
-        "Gebruikers",
+        "users",
         [
             ["column" => "Email", "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]],
             ["column" => "Salt", "value" => ["value" => $generatedSalt, "type" => PropertyTypes::string]],

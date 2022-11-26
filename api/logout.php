@@ -6,7 +6,7 @@ use dbHandler\PropertyTypes;
 try {
     require_once "./loggedinConfig.php";
     $result = $databaseConnection->update(
-        "Users",
+        "users",
         [
             ["column" => "LoginToken", "value" => ["value" => "", "type" => PropertyTypes::string]]
         ],

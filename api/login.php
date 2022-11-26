@@ -16,7 +16,7 @@ try {
         ]
     );
     $password = new Validation(
-        "email", Methods::POST, Types::TEXT,
+        "password", Methods::POST, Types::TEXT,
         [
             Attributes::required => ["value" => "", "errorMessage" => "Er moet een password gegeven worden!"]
         ]
@@ -28,7 +28,7 @@ try {
     }
     $result = $databaseConnection->select(
         [],
-        "Gebruikers",
+        "users",
         [
             ["column" => "Email", "method" => CompareMethods::equals, "value" => ["value" => $email->getValue(), "type" => PropertyTypes::string]]
         ]
@@ -43,7 +43,7 @@ try {
     }
     $loginToken = substr(str_shuffle(str_repeat($x = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10 / strlen($x)))), 1, 10);
     $databaseConnection->update(
-        "Users",
+        "users",
         [["column" => "LoginToken", "value" => ["value" => $loginToken, "type" => PropertyTypes::string]]],
         [["column" => "ID", "method" => CompareMethods::equals, "value" => ["value" => $result[0]["ID"], "type" => PropertyTypes::int]]]
     );

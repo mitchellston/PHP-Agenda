@@ -69,7 +69,7 @@ try {
     if ($status->getValue() != "") {
         array_push($toBeInserted, ["column" => "Status", "value" => ["value" => strtolower($status->getValue()), "type" => PropertyTypes::string]]);
     }
-    $result = $databaseConnection->insert("Items", $toBeInserted);
+    $result = $databaseConnection->insert("items", $toBeInserted);
     if ($result == false) {
         echo json_encode(["Success" => false, "error" => ["title" => "INSERT", "message" => "Het toevoegen van het item is niet gelukt"]]);
         exit;

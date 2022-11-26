@@ -72,7 +72,7 @@ try {
     }
 
     $result = $databaseConnection->update(
-        "Items",
+        "items",
         $toBeChanged,
         [
             ["column" => "ID", "method" => CompareMethods::equals, "value" => ["value" => $id->getValue(), "type" => PropertyTypes::int]],

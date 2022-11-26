@@ -24,7 +24,7 @@ try {
     if ($id->getValue() != "") {
         array_push($WHERE, ["column" => "ID", "method" => CompareMethods::equals, "value" => ["value" => $id->getValue(), "type" => PropertyTypes::int]]);
     }
-    $result = $databaseConnection->select(["ID", "Subject", "Content", "BeginDate", "EndDate", "Priority", "Status"], "Items", $WHERE);
+    $result = $databaseConnection->select(["ID", "Subject", "Content", "BeginDate", "EndDate", "Priority", "Status"], "items", $WHERE);
     if ($result == null) {
         echo json_encode(["Success" => false, "error" => ["title" => "NO RESULTS", "message" => "Er zijn geen items gevonden!"]]);
         exit;

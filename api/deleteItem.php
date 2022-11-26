@@ -19,7 +19,7 @@ try {
         exit;
     }
     $result = $databaseConnection->delete(
-        "Items",
+        "items",
         [
             ["column" => "ID", "method" => CompareMethods::equals, "value" => ["value" => $id->getValue(), "type" => PropertyTypes::int]],
             ["column" => "User", "method" => CompareMethods::equals, "value" => ["value" => $_SESSION["User"], "type" => PropertyTypes::int]]
