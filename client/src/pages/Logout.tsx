@@ -53,7 +53,7 @@ const App: Component = () => {
           <button
             class={Styles.Right}
             onClick={() => {
-              navigate("/agenda");
+              navigate("./agenda");
             }}
           >
             Nee

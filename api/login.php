@@ -22,7 +22,7 @@ try {
         ]
     );
     $errors = array_merge($email->getErrors(), $password->getErrors());
-    if (count($erros) > 0) {
+    if (count($errors) > 0) {
         echo json_encode(["Success" => false, "error" => ["title" => "POST", "message" => $errors[0]]]);
         exit;
     }

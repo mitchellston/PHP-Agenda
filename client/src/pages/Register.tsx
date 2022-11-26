@@ -42,7 +42,7 @@ const App: Component = () => {
         return setGeneralError(data.error.message);
       }
       sessionStorage.setItem("firstLogin", "true");
-      return (location.href = "/agenda");
+      return (location.href = "./agenda");
     },
   });
   const register = (event: any) => {
@@ -133,7 +133,7 @@ const App: Component = () => {
               <a
                 tabindex={5}
                 onClick={() => {
-                  navigate("/");
+                  navigate("../login");
                 }}
               >
                 Login

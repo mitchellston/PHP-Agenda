@@ -37,10 +37,12 @@ const App: Component = () => {
       if (data.Success == false && data.error?.message != null) {
         return setGeneralError(data.error.message);
       }
-      return (location.href = "/agenda");
+      return (location.href = "./agenda");
     },
   });
   const loginButton = (event: any) => {
+    event.preventDefault();
+
     setEmailError("");
     setPasswordError("");
     setGeneralError("");
@@ -55,7 +57,6 @@ const App: Component = () => {
       }
       return setPasswordError(password.validationMessage);
     }
-    event.preventDefault();
     mutation.mutate();
   };
   return (
@@ -100,7 +101,7 @@ const App: Component = () => {
             <a
               tabIndex={4}
               onClick={() => {
-                navigate("/register");
+                navigate("/dist/register");
               }}
             >
               Register

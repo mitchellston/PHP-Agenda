@@ -18,14 +18,15 @@ const App: Component = () => {
     <div>
       <main>
         <Routes>
-          <Route path="/" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/uitloggen" component={Uitloggen} />
-          <Route path="/agenda" component={Agenda} />
-          <Route path="/agenda/item" component={Item} />
-          <Route path="/agenda/item/:id" component={Detail} />
-          <Route path="/agenda/item/:id/aanpassen" component={Change} />
-          <Route path="/*all" component={NotFound} />
+          <Route path="/dist" component={Login} />
+          <Route path="/dist/login" component={Login} />
+          <Route path="/dist/register" component={Register} />
+          <Route path="/dist/uitloggen" component={Uitloggen} />
+          <Route path="/dist/agenda" component={Agenda} />
+          <Route path="/dist/agenda/item" component={Item} />
+          <Route path="/dist/agenda/item/:id" component={Detail} />
+          <Route path="/dist/agenda/item/:id/aanpassen" component={Change} />
+          <Route path="/dist/*all" component={NotFound} />
         </Routes>
       </main>
     </div>
