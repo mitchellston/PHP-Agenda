@@ -6,6 +6,9 @@ import HomeIcon from "../../icons/Home.svg";
 import AddToCalanderIcon from "../../icons/AddToCalander.svg";
 import LogoutIcon from "../../icons/Logout.svg";
 
+//notification component
+import Notification from "./Notification";
+import { PRIMDIR } from "../../../DIRECTORIES";
 const Navbar: Component = () => {
   const navigate = useNavigate();
   return (
@@ -15,7 +18,7 @@ const Navbar: Component = () => {
           <a
             title="Terug naar uw agenda"
             onClick={() => {
-              navigate("/agenda");
+              navigate(PRIMDIR + "/agenda");
             }}
             class={Styles.left}
           >
@@ -24,7 +27,7 @@ const Navbar: Component = () => {
           <a
             title="Nieuw agendapunt"
             onClick={() => {
-              navigate("/agenda/item");
+              navigate(PRIMDIR + "/agenda/item");
             }}
             class={Styles.right}
           >
@@ -33,10 +36,11 @@ const Navbar: Component = () => {
         </div>
 
         <div class={Styles.right}>
+          <Notification />
           <a
             title="Uitloggen"
             onClick={() => {
-              navigate("/uitloggen");
+              navigate(PRIMDIR + "/uitloggen");
             }}
           >
             <img src={LogoutIcon} alt="Uitloggen" />

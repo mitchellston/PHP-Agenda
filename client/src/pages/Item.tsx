@@ -6,6 +6,7 @@ import BackPage from "../icons/Calander.svg";
 import CalanderConfirm from "../icons/CalanderConfirm.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Item.module.scss";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -75,7 +76,7 @@ const App: Component = () => {
         if (data.Success == false && data.error?.message != null) {
           return setGeneralError(data.error?.message);
         }
-        navigate("/agenda");
+        navigate(PRIMDIR + "/agenda");
       },
     }
   );
@@ -102,7 +103,6 @@ const App: Component = () => {
     if (priority.checkValidity() == false) {
       return setPriorityError(priority.validationMessage);
     }
-    console.log("test");
     mutation.mutate();
   };
   return (
@@ -114,7 +114,7 @@ const App: Component = () => {
             title="Terug"
             tabIndex={8}
             onClick={() => {
-              navigate("/agenda");
+              navigate(PRIMDIR + "/agenda");
             }}
             class={Styles.BackPage}
           >

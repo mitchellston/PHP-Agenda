@@ -5,6 +5,7 @@ import { Switch, Match, For } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import axios from "axios";
 import NavBar from "../Components/navbar/NavBar";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -41,7 +42,7 @@ const App: Component = () => {
   const query = createQuery<response>(() => ["agendaItems"], fetchAgendaItems, {
     onSuccess: (data) => {
       if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
-        navigate("/");
+        return navigate(PRIMDIR + "/");
       }
     },
   });
@@ -78,7 +79,7 @@ const App: Component = () => {
                         {(Item, i) => (
                           <tr
                             onClick={() => {
-                              navigate("/agenda/item/" + Item.ID);
+                              navigate(PRIMDIR + "/agenda/item/" + Item.ID);
                             }}
                           >
                             <th>{Item.Subject}</th>

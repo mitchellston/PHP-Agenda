@@ -3,6 +3,7 @@ import { useNavigate } from "@solidjs/router";
 import Styles from "./SCSS/Login.module.scss";
 import { createMutation } from "@tanstack/solid-query";
 import axios from "axios";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -37,7 +38,7 @@ const App: Component = () => {
       if (data.Success == false && data.error?.message != null) {
         return setGeneralError(data.error.message);
       }
-      return (location.href = "./agenda");
+      return navigate(PRIMDIR + "/agenda");
     },
   });
   const loginButton = (event: any) => {
@@ -101,7 +102,7 @@ const App: Component = () => {
             <a
               tabIndex={4}
               onClick={() => {
-                navigate("/dist/register");
+                navigate(PRIMDIR + "/register");
               }}
             >
               Register

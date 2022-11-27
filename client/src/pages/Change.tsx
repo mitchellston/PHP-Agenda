@@ -6,6 +6,7 @@ import BackPage from "../icons/CalanderStop.svg";
 import CalanderConfirm from "../icons/CalanderConfirm.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Item.module.scss";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -115,7 +116,7 @@ const App: Component = () => {
             title="Terug"
             tabIndex={8}
             onClick={() => {
-              navigate("/agenda/item/" + params.id);
+              navigate(PRIMDIR + "/agenda/item/" + params.id);
             }}
             class={Styles.BackPage}
           >

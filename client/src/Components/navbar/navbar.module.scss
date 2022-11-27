@@ -51,7 +51,7 @@
       right: 0;
       display: grid;
       height: 25px;
-      grid-template-columns: 35px;
+      grid-template-columns: 35px 35px;
       gap: 7px;
       > a {
         @media (prefers-color-scheme: dark) {
@@ -65,6 +65,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        div {
+          img {
+            @media (prefers-color-scheme: dark) {
+              filter: invert(1);
+            }
+            width: 90%;
+            height: 90%;
+          }
+          width: 90%;
+          height: 90%;
+        }
         img {
           @media (prefers-color-scheme: dark) {
             filter: invert(1);

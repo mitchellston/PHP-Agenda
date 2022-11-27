@@ -91,7 +91,7 @@ class dbHandler
         $ORDERSQLSTRING= "";
         if($orderBy != null) {
             $ORDERSQLSTRING = " ORDER BY ";
-            foreach($orderBy["columns"] as $value) {
+            foreach($orderBy["columns"] as $key => $value) {
                 if ($key === array_key_last($orderBy["columns"])) {
                     if(gettype($value) == "array") {
                         $ORDERSQLSTRING .= $value["table"] . ".`" . $value["column"] . "` ";

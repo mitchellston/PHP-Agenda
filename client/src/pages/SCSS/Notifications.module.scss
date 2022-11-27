@@ -1,0 +1,52 @@
+.ViewPort {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Content {
+    width: min(95%, 500px);
+    padding: min(2%, 15px);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    .Title {
+      margin: 2%;
+      font-family: "Sono", sans-serif;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      tbody {
+        tr {
+          cursor: pointer;
+          border-spacing: 15px;
+          border-top: 1px black solid;
+          @media (prefers-color-scheme: dark) {
+            border-top: 1px white solid;
+          }
+          th {
+            button {
+              /** accept invite button */
+              background-color: #00b300;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              padding: 5px;
+              font-size: 1rem;
+              font-weight: bold;
+              cursor: pointer;
+              &:hover {
+                background-color: #00e600;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      color: #f6f7f5;
+      background-color: #252639;
+    }
+  }
+}

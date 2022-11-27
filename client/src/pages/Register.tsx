@@ -3,7 +3,8 @@ import { createSignal } from "solid-js";
 import { createMutation } from "@tanstack/solid-query";
 import Styles from "./SCSS/Login.module.scss";
 import axios from "axios";
-import { useNavigate } from "@solidjs/router";
+import { Navigate, useNavigate } from "@solidjs/router";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -38,11 +39,14 @@ const App: Component = () => {
 
   const mutation = createMutation(["register"], registerMutation, {
     onSuccess: (data) => {
+      if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
+        return navigate(PRIMDIR + "/");
+      }
       if (data.Success == false && data.error?.message != null) {
         return setGeneralError(data.error.message);
       }
       sessionStorage.setItem("firstLogin", "true");
-      return (location.href = "./agenda");
+      return navigate(PRIMDIR + "/agenda");
     },
   });
   const register = (event: any) => {
@@ -126,14 +130,14 @@ const App: Component = () => {
             <p class={Styles.Error}>{generalError}</p>
             <div class={Styles.Login}>
               <button type="submit" tabindex={4} onClick={register}>
-                Login
+                Register
               </button>
             </div>
             <div class={Styles.ChangePage}>
               <a
                 tabindex={5}
                 onClick={() => {
-                  navigate("../login");
+                  navigate(PRIMDIR + "/login");
                 }}
               >
                 Login

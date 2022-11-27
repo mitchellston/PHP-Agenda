@@ -3,6 +3,7 @@ import Styles from "./SCSS/Uitloggen.module.scss";
 import { createMutation } from "@tanstack/solid-query";
 import { useNavigate } from "@solidjs/router";
 import axios from "axios";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -25,16 +26,16 @@ const logout = async (): Promise<response> => {
   }
 };
 const App: Component = () => {
+  const navigate = useNavigate();
   const [error, setError] = createSignal("");
   const mutation = createMutation(["Logout"], logout, {
     onSuccess: (data) => {
-      console.log(data);
       if (data.Success == false && data.error?.message != null) {
         return setError(data.error?.message);
       }
+      navigate(PRIMDIR + "/login");
     },
   });
-  const navigate = useNavigate();
   return (
     <div class={Styles.ViewPort}>
       <div class={Styles.Content}>
@@ -53,7 +54,7 @@ const App: Component = () => {
           <button
             class={Styles.Right}
             onClick={() => {
-              navigate("./agenda");
+              navigate(PRIMDIR + "/agenda");
             }}
           >
             Nee

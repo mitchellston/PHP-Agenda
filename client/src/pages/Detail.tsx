@@ -7,6 +7,7 @@ import Bin from "../icons/Bin.svg";
 import ChangeItem from "../icons/Change.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Detail.module.scss";
+import { PRIMDIR } from "../../DIRECTORIES";
 type response = {
   Success: boolean;
   error?: {
@@ -62,7 +63,7 @@ const App: Component = () => {
           <div
             title="Terug"
             onClick={() => {
-              navigate("/agenda");
+              navigate(PRIMDIR + "/agenda");
             }}
             class={Styles.BackPage}
           >
@@ -71,7 +72,7 @@ const App: Component = () => {
           <div
             title="Verwijderen"
             onClick={() => {
-              navigate("/agenda");
+              navigate(PRIMDIR + "/agenda");
             }}
             class={Styles.Bin}
           >
@@ -80,7 +81,7 @@ const App: Component = () => {
           <div
             title="Aanpassen"
             onClick={() => {
-              navigate("/agenda/item/" + params.id + "/aanpassen");
+              navigate(PRIMDIR + "/agenda/item/" + params.id + "/aanpassen");
             }}
             class={Styles.Change}
           >
