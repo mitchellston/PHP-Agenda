@@ -22,11 +22,13 @@ try {
     $beginDate = new Validation(
         "beginDate", Methods::POST, Types::DATE,
         [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een begin datum zijn!"],
         ]
     );
     $endDate = new Validation(
         "endDate", Methods::POST, Types::DATE,
         [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een eind datum zijn!"],
         ]
     );
     $priority = new Validation(
