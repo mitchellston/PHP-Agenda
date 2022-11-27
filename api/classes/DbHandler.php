@@ -4,11 +4,23 @@ namespace dbHandler;
 abstract class CompareMethods
 {
     const equals = "=";
+    const greater = ">";
+    const lesser = "<";
 }
 abstract class PropertyTypes
 {
     const string = "s";
     const int = "i";
+}
+abstract class TypeOfJoin {
+    const INNER = "INNER";
+    const LEFT = "LEFT";
+    const RIGHT = "RIGHT";
+    const FULL = "FULL";
+}
+abstract class order {
+    const DESCENDING  = "DESC";
+    const ASCENDING = "ASC";
 }
 class dbHandler
 {
@@ -28,13 +40,15 @@ class dbHandler
         $this->dbConnection->set_charset('utf8mb4');
     }
     /**
-     * @param string[] | null $columns
+     * @param array<string|array{table:string, column:string}> | null $columns
      * @param string $table
      * @param array<array{column:string, method: string, value: array{value: mixed, type:string}}>| null $WHERE
-     * @param array<array{tableToJoin:string, fromColumn:string, toColumn:string}>| null $join
+     * @param array<array{tableToJoin:string, typeOfJoin: string, fromColumn:string, toColumn:string}>| null $join
+     * @param int|null $limit
+     * @param array{columns: array<string|array{table:string, column:string}>, order: string}|null $orderBy
      * @return array<int, array<array-key, mixed>|bool|null>|null
      */
-    function select(array $columns = null, string $table, array $WHERE = null, array $join = null)
+    function select(array $columns = null, string $table, array $WHERE = null, array $join = null, int $limit = null, array $orderBy = null)
     {
         if ($this->dbConnection == false) {
             return null;
@@ -44,8 +58,16 @@ class dbHandler
             $COLUMNSSQLSTRING = "";
             foreach ($columns as $key => $value) {
                 if ($key === array_key_last($columns)) {
+                    if(gettype($value) == "array") {
+                        $COLUMNSSQLSTRING .= $value["table"] . ".`" . $value["column"] . "`";
+                        continue;
+                    }
                     $COLUMNSSQLSTRING .= "`" . $value . "`";
                     break;
+                }
+                if(gettype($value) == "array") {
+                    $COLUMNSSQLSTRING .= $value["table"] . ".`" . $value["column"] . "`,";
+                    continue;
                 }
                 $COLUMNSSQLSTRING .= "`" . $value . "`,";
             }
@@ -55,9 +77,7 @@ class dbHandler
         $PROPERTYTYPES = "";
         $VALUES = [];
         if ($WHERE != null) {
-
             $WHERESQLSTRING = "WHERE ";
-
             foreach ($WHERE as $key => $value) {
                 $PROPERTYTYPES .= $value["value"]["type"];
                 array_push($VALUES, $value["value"]["value"]);
@@ -68,13 +88,37 @@ class dbHandler
                 $WHERESQLSTRING .= "`" . $value["column"] . "` " . $value["method"] . " ? AND ";
             }
         }
+        $ORDERSQLSTRING= "";
+        if($orderBy != null) {
+            $ORDERSQLSTRING = " ORDER BY ";
+            foreach($orderBy["columns"] as $value) {
+                if ($key === array_key_last($orderBy["columns"])) {
+                    if(gettype($value) == "array") {
+                        $ORDERSQLSTRING .= $value["table"] . ".`" . $value["column"] . "` ";
+                        continue;
+                    }
+                    $ORDERSQLSTRING .= "`" . $value . "` ";
+                    break;
+                }
+                if(gettype($value) == "array") {
+                    $ORDERSQLSTRING .= $value["table"] . ".`" . $value["column"] . "`,";
+                    continue;
+                }
+                $ORDERSQLSTRING .= "`" . $value . "`,";
+            }
+            $ORDERSQLSTRING .= $orderBy["order"]." ";
+        }
+        $LIMITSQLSTRING = "";
+        if($limit != null) {
+            $LIMITSQLSTRING = " LIMIT ".$limit;
+        }
         $JOINSQLSTRING = "";
         if ($join != null) {
             foreach ($join as $value) {
-                $JOINSQLSTRING .= "INNER JOIN " . $value["tableToJoin"] . " ON " . $value["fromColumn"] . "=" . $value["toColumn"] . " ";
+                $JOINSQLSTRING .= $value["typeOfJoin"]." JOIN " . $value["tableToJoin"] . " ON " . $value["fromColumn"] . "=" . $value["toColumn"] . " ";
             }
         }
-        $query = mysqli_prepare($this->dbConnection, "SELECT " . $COLUMNSSQLSTRING . " FROM `" . $table . "`" . $JOINSQLSTRING . $WHERESQLSTRING);
+        $query = mysqli_prepare($this->dbConnection, "SELECT " . $COLUMNSSQLSTRING . " FROM `" . $table . "` "  . $JOINSQLSTRING . $WHERESQLSTRING . $ORDERSQLSTRING . $LIMITSQLSTRING);
         if ($PROPERTYTYPES != "") {
             $query->bind_param($PROPERTYTYPES, ...$VALUES);
         }
