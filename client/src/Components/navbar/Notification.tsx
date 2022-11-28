@@ -18,7 +18,7 @@ const Notification: Component = () => {
   const [amountOfNotifications, setAmountOfNotifications] = createSignal(0);
   // fetch to get amount of notifications
   const query = createQuery<void>(
-    () => ["amountOfNotifications"],
+    () => ["amountOfNotificationsQuery"],
     async () => {
       try {
         const data: response = await (await axios.post("")).data;

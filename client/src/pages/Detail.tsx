@@ -3,11 +3,13 @@ import { createQuery } from "@tanstack/solid-query";
 import axios from "axios";
 import { Component, Match, Switch } from "solid-js";
 import BackPage from "../icons/Calander.svg";
+import Invite from "../icons/Invite.svg";
 import Bin from "../icons/Bin.svg";
 import ChangeItem from "../icons/Change.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Detail.module.scss";
 import { PRIMDIR } from "../../DIRECTORIES";
+import Model from "../Components/Model/Model";
 type response = {
   Success: boolean;
   error?: {
@@ -70,23 +72,40 @@ const App: Component = () => {
             <img src={BackPage} alt="Terug" />
           </div>
           <div
-            title="Verwijderen"
+            title="Uitnodigen voor agendapunt"
             onClick={() => {
-              navigate(PRIMDIR + "/agenda");
+              navigate(PRIMDIR + "/agenda/item/" + params.id + "/invite");
             }}
-            class={Styles.Bin}
+            class={Styles.Invite}
           >
-            <img src={Bin} alt="Verwijder" />
+            <img src={Invite} alt="Uitnodigen voor agendapunt" />
           </div>
           <div
-            title="Aanpassen"
+            title="Aanpassen agendapunt"
             onClick={() => {
               navigate(PRIMDIR + "/agenda/item/" + params.id + "/aanpassen");
             }}
             class={Styles.Change}
           >
-            <img src={ChangeItem} alt="Aanpassen" />
+            <img src={ChangeItem} alt="Aanpassen agendapunt" />
           </div>
+          <div
+            title="Verwijder agendapunt"
+            onClick={() => {
+              navigate(PRIMDIR + "/agenda");
+            }}
+            class={Styles.Bin}
+          >
+            <img src={Bin} alt="Verwijder agendapunt" />
+          </div>
+          <Model
+            title="test"
+            close={() => {
+              console.log("wfiofweoho");
+            }}
+          >
+            <h1>TEST - feoijewhiogerwigerohiu</h1>
+          </Model>
           <Switch>
             <Match when={query.isLoading}>
               <p style="text-align: center">Data aan het laden...</p>

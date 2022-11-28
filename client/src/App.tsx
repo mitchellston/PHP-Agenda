@@ -31,6 +31,10 @@ const App: Component = () => {
             path={PRIMDIR + "/agenda/item/:id/aanpassen"}
             component={Change}
           />
+          <Route
+            path={PRIMDIR + "/agenda/item/:id/invite"}
+            component={Change}
+          />
           <Route path={PRIMDIR + "/*all"} component={NotFound} />
         </Routes>
       </main>
