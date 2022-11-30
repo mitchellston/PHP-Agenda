@@ -24,7 +24,10 @@ type response = {
 };
 const fetchAgendaItems = async (): Promise<response> => {
   try {
-    const data: response = await (await axios.post("")).data;
+    const data: response = await (
+      await axios.postForm(PRIMDIR + "/api/items/getItems.php")
+    ).data;
+
     return data;
   } catch (err) {
     return {
@@ -44,6 +47,7 @@ const App: Component = () => {
       if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
         return navigate(PRIMDIR + "/");
       }
+      console.log(data);
     },
   });
   return (
@@ -83,7 +87,7 @@ const App: Component = () => {
                             }}
                           >
                             <th>{Item.Subject}</th>
-                            <th>{Item.Subject}</th>
+                            <th>{Item.Content}</th>
                           </tr>
                         )}
                       </For>

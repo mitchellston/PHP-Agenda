@@ -43,6 +43,9 @@
         right: 0;
         height: 25px;
         width: 25px;
+        @media (prefers-color-scheme: dark) {
+          filter: invert(1);
+        }
         img {
           @media (prefers-color-scheme: dark) {
             filter: invert(1);
@@ -51,6 +54,10 @@
           height: 100%;
         }
       }
+    }
+    @media (prefers-color-scheme: dark) {
+      color: #f6f7f5;
+      background-color: #252639;
     }
   }
 }

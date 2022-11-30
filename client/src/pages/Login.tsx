@@ -11,20 +11,7 @@ type response = {
     message: string;
   };
 };
-const login = async (): Promise<response> => {
-  try {
-    const data: response = await (await axios.post("")).data;
-    return data;
-  } catch (err) {
-    return {
-      Success: false,
-      error: {
-        title: "FETCH FAILED",
-        message: "Geen antwoord van de server probeer het later opnieuw!",
-      },
-    };
-  }
-};
+
 const App: Component = () => {
   const navigate = useNavigate();
   let email!: HTMLInputElement;
@@ -32,7 +19,25 @@ const App: Component = () => {
   const [emailError, setEmailError] = createSignal("");
   const [passwordError, setPasswordError] = createSignal("");
   const [generalError, setGeneralError] = createSignal("");
-
+  const login = async (): Promise<response> => {
+    try {
+      const data: response = await (
+        await axios.postForm(PRIMDIR + "/api/auth/login.php", {
+          email: email.value,
+          password: password.value,
+        })
+      ).data;
+      return data;
+    } catch (err) {
+      return {
+        Success: false,
+        error: {
+          title: "FETCH FAILED",
+          message: "Geen antwoord van de server probeer het later opnieuw!",
+        },
+      };
+    }
+  };
   const mutation = createMutation(["Login"], login, {
     onSuccess: (data) => {
       if (data.Success == false && data.error?.message != null) {
@@ -105,7 +110,7 @@ const App: Component = () => {
                 navigate(PRIMDIR + "/register");
               }}
             >
-              Register
+              Registreer
             </a>
           </div>
         </form>

@@ -30,6 +30,10 @@ try {
         echo json_encode(["Success" => false, "error" => ["title" => "NO RESULTS", "message" => "Er zijn geen items gevonden!"]]);
         exit;
     }
+    if ($id->getValue() != "") {
+        echo json_encode(["Success" => true, "data" => $result[0]]);
+        exit;
+    }
     echo json_encode(["Success" => true, "data" => $result]);
 } catch (Exception $err) {
     echo json_encode(["Success" => false, "error" => ["title" => "...", "message" => "Er ging iets fout probeer het later opnieuw!"]]);

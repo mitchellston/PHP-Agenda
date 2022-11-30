@@ -40,7 +40,7 @@ try {
         ]
     );
     $status = new Validation(
-        "status", Methods::POST, Types::NUMBER,
+        "status", Methods::POST, Types::TEXT,
         [
             Attributes::pattern => ["value" => "/(?=.*?[nbaNBA]).{0,}/", "errorMessage" => "De status moet 'n', 'b' of 'a' zijn!"],
             Attributes::required => ["value" => "", "errorMessage" => "Er moet een status zijn!"],

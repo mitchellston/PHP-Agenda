@@ -21,6 +21,7 @@ const App: Component = () => {
         <Routes>
           <Route path={PRIMDIR} component={Login} />
           <Route path={PRIMDIR + "/login"} component={Login} />
+          <Route path={PRIMDIR + "/index.html"} component={Login} />
           <Route path={PRIMDIR + "/register"} component={Register} />
           <Route path={PRIMDIR + "/uitloggen"} component={Uitloggen} />
           <Route path={PRIMDIR + "/notifications"} component={Notifications} />

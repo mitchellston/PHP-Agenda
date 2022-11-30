@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     target: "esnext",
   },
-  base: "./",
+  base: "/basis_js_php/php_crud/",
   resolve: {
     alias: {
       "@": "JSPHP/CRUD",

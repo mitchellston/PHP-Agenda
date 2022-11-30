@@ -53,7 +53,16 @@ const App: Component = () => {
   const [generalError, setGeneralError] = createSignal("");
   const createAgendaItem = async (): Promise<response> => {
     try {
-      const data: response = await (await axios.post("", {})).data;
+      const data: response = await (
+        await axios.postForm(PRIMDIR + "/api/items/addItem.php", {
+          subject: subject.value,
+          content: content.value,
+          beginDate: beginDate.value,
+          endDate: endDate.value,
+          status: status.value,
+          priority: priority.value,
+        })
+      ).data;
       return data;
     } catch (err) {
       return {
@@ -71,11 +80,12 @@ const App: Component = () => {
     {
       onSuccess: (data) => {
         if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
-          return navigate("/");
+          return navigate(PRIMDIR + "/");
         }
         if (data.Success == false && data.error?.message != null) {
           return setGeneralError(data.error?.message);
         }
+        console.log(data);
         navigate(PRIMDIR + "/agenda");
       },
     }
@@ -121,13 +131,13 @@ const App: Component = () => {
             <img src={BackPage} alt="Terug" />
           </button>
           <button
-            title="Aanpassen"
+            title="Aanmaken"
             tabIndex={7}
             type="submit"
             onClick={createItem}
             class={Styles.Change}
           >
-            <img src={CalanderConfirm} alt="Aanpassen" />
+            <img src={CalanderConfirm} alt="Aanmaken" />
           </button>
           <h1 class={Styles.Title}>Nieuw kalenderitem - {name}</h1>
           <p class={Styles.Error}>{generalError}</p>
@@ -189,6 +199,7 @@ const App: Component = () => {
               placeholder="Prioriteit"
               min={1}
               max={5}
+              value={1}
               ref={priority}
               required
             />

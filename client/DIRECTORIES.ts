@@ -1,1 +1,1 @@
-export const PRIMDIR: string = "/JSPHP/CRUD";
+export const PRIMDIR: string = "/basis_js_php/php_crud";

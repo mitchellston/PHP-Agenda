@@ -1,6 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import Styles from "./SCSS/Notifications.module.scss";
-import { createMutation, createQuery } from "@tanstack/solid-query";
+import { createQuery } from "@tanstack/solid-query";
 import { Switch, Match, For } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import axios from "axios";
@@ -32,7 +32,9 @@ type acceptInviteResponse = {
 };
 const fetchAgendaItems = async (): Promise<response> => {
   try {
-    const data: response = await (await axios.post("")).data;
+    const data: response = await (
+      await axios.post(PRIMDIR + "/api/notification/getNotifications.php")
+    ).data;
     return data;
   } catch (err) {
     return {
@@ -61,9 +63,12 @@ const App: Component = () => {
   const acceptInvite = async (id: number) => {
     try {
       const data: acceptInviteResponse = await (
-        await axios.post("", {
-          ID: id,
-        })
+        await axios.postForm(
+          PRIMDIR + "/api/notification/acceptNotification.php",
+          {
+            ID: id,
+          }
+        )
       ).data;
       if (data.Success == true) {
         return query.refetch();
@@ -124,6 +129,7 @@ const App: Component = () => {
                                     onClick={async () => {
                                       acceptInvite(Item.ID);
                                     }}
+                                    class={Styles.AcceptButton}
                                   >
                                     accepteer
                                   </button>

@@ -1,5 +1,5 @@
-Options -MultiViews
 RewriteEngine On
-RewriteBase /JSPHP/CRUD
+RewriteCond %{REQUEST_URI} /basis_js_php/php_crud
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ /index.html [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ %{DOCUMENT_ROOT}/basis_js_php/php_crud/index.html [QSA,L]

@@ -28,23 +28,29 @@ try {
     );
     $beginDate = new Validation(
         "beginDate", Methods::POST, Types::DATE,
-        []
+        [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een begin datum zijn!"],
+        ]
     );
     $endDate = new Validation(
         "endDate", Methods::POST, Types::DATE,
-        []
+        [
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een eind datum zijn!"],
+        ]
     );
     $priority = new Validation(
         "priority", Methods::POST, Types::NUMBER,
         [
             Attributes::min => ["value" => 0, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"],
-            Attributes::max => ["value" => 6, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"]
+            Attributes::max => ["value" => 6, "errorMessage" => "De priority moet tussen de 1 en 5 zijn!"],
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een prioriteit zijn!"],
         ]
     );
     $status = new Validation(
-        "status", Methods::POST, Types::NUMBER,
+        "status", Methods::POST, Types::TEXT,
         [
-            Attributes::pattern => ["value" => "/(?=.*?[nbaNBA]).{0,}/", "errorMessage" => "De status moet 'n', 'b' of 'a' zijn!"]
+            Attributes::pattern => ["value" => "/(?=.*?[nbaNBA]).{0,}/", "errorMessage" => "De status moet 'n', 'b' of 'a' zijn!"],
+            Attributes::required => ["value" => "", "errorMessage" => "Er moet een status zijn!"],
         ]
     );
     $errors = array_merge($id->getErrors(), $subject->getErrors(), $content->getErrors(), $beginDate->getErrors(), $endDate->getErrors(), $priority->getErrors(), $status->getErrors());
@@ -63,13 +69,13 @@ try {
         array_push($toBeChanged, ["column" => "BeginDate", "value" => ["value" => $beginDate->getValue(), "type" => PropertyTypes::string]]);
     }
     if ($endDate->getValue() != "") {
-        array_push($toBeChanged, ["column" => "BeginDate", "value" => ["value" => $endDate->getValue(), "type" => PropertyTypes::string]]);
+        array_push($toBeChanged, ["column" => "EndDate", "value" => ["value" => $endDate->getValue(), "type" => PropertyTypes::string]]);
     }
     if ($priority->getValue() != "") {
-        array_push($toBeChanged, ["column" => "BeginDate", "value" => ["value" => $priority->getValue(), "type" => PropertyTypes::int]]);
+        array_push($toBeChanged, ["column" => "Priority", "value" => ["value" => $priority->getValue(), "type" => PropertyTypes::int]]);
     }
     if ($status->getValue() != "") {
-        array_push($toBeChanged, ["column" => "BeginDate", "value" => ["value" => strtolower($status->getValue()), "type" => PropertyTypes::string]]);
+        array_push($toBeChanged, ["column" => "Status", "value" => ["value" => strtolower($status->getValue()), "type" => PropertyTypes::string]]);
     }
 
     $result = $databaseConnection->update(
@@ -81,7 +87,7 @@ try {
         ]
     );
     if ($result == false) {
-        echo json_encode(["Success" => false, "error" => ["title" => "UPDATE", "message" => "Het bewerken is niet gelukt"]]);
+        echo json_encode(["Success" => false, "error" => ["title" => "UPDATE", "message" => "Het bewerken is niet gelukt!"]]);
         exit;
     }
     echo json_encode(["Success" => true]);

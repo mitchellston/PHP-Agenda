@@ -12,20 +12,6 @@ type response = {
     message: string;
   };
 };
-const registerMutation = async (): Promise<response> => {
-  try {
-    const data: response = await (await axios.post("")).data;
-    return data;
-  } catch (err) {
-    return {
-      Success: false,
-      error: {
-        title: "FETCH FAILED",
-        message: "Geen antwoord van de server probeer het later opnieuw!",
-      },
-    };
-  }
-};
 
 const App: Component = () => {
   const navigate = useNavigate();
@@ -36,7 +22,26 @@ const App: Component = () => {
   const [passwordError, setPasswordError] = createSignal("");
   const [confirmPasswordError, setConfirmPasswordError] = createSignal("");
   const [generalError, setGeneralError] = createSignal("");
-
+  const registerMutation = async (): Promise<response> => {
+    try {
+      const data: response = await (
+        await axios.postForm(PRIMDIR + "/api/auth/register.php", {
+          email: email.value,
+          password: password.value,
+          confirmPassword: confirmPassword.value,
+        })
+      ).data;
+      return data;
+    } catch (err) {
+      return {
+        Success: false,
+        error: {
+          title: "FETCH FAILED",
+          message: "Geen antwoord van de server probeer het later opnieuw!",
+        },
+      };
+    }
+  };
   const mutation = createMutation(["register"], registerMutation, {
     onSuccess: (data) => {
       if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
@@ -83,7 +88,7 @@ const App: Component = () => {
       <div class={Styles.Form}>
         <div class={Styles.Content}>
           <form action="">
-            <h1>Register</h1>
+            <h1>Registreer</h1>
             <hr class={Styles.Separator} />
             <div class={Styles.Input}>
               <p class={Styles.Label}>E-mailadres:</p>
@@ -130,7 +135,7 @@ const App: Component = () => {
             <p class={Styles.Error}>{generalError}</p>
             <div class={Styles.Login}>
               <button type="submit" tabindex={4} onClick={register}>
-                Register
+                Registreer
               </button>
             </div>
             <div class={Styles.ChangePage}>

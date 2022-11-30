@@ -13,7 +13,9 @@ type response = {
 };
 const logout = async (): Promise<response> => {
   try {
-    const data: response = await (await axios.post("")).data;
+    const data: response = await (
+      await axios.postForm(PRIMDIR + "/api/auth/logout.php")
+    ).data;
     return data;
   } catch (err) {
     return {

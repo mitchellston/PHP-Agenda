@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "@solidjs/router";
 import { createQuery } from "@tanstack/solid-query";
 import axios from "axios";
-import { Component, Match, Switch } from "solid-js";
+import { Component, createSignal, Match, Switch } from "solid-js";
 import BackPage from "../icons/Calander.svg";
 import Invite from "../icons/Invite.svg";
 import Bin from "../icons/Bin.svg";
@@ -9,7 +9,9 @@ import ChangeItem from "../icons/Change.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Detail.module.scss";
 import { PRIMDIR } from "../../DIRECTORIES";
-import Model from "../Components/Model/Model";
+import Model from "../Components/models/Model";
+import InviteModel from "../Components/models/InviteModel";
+import DeleteModel from "../Components/models/DeleteModel";
 type response = {
   Success: boolean;
   error?: {
@@ -20,8 +22,8 @@ type response = {
     ID: number;
     Subject: string;
     Content: string;
-    BeginDate: Date;
-    EndDate: Date;
+    BeginDate: string;
+    EndDate: string;
     Priority: number;
     Status: "n" | "b" | "a";
   };
@@ -31,11 +33,14 @@ const App: Component = () => {
   const navigate = useNavigate();
   const params = useParams();
   const id = params.id;
+  const [removeModelShow, setRemoveModelShow] = createSignal(false);
+  const [inviteModelShow, setInviteModelShow] = createSignal(false);
+  const [error, setError] = createSignal("");
   const fetchAgendaItem = async (): Promise<response> => {
     try {
       const data: response = await (
-        await axios.post("", {
-          id,
+        await axios.postForm(PRIMDIR + "/api/items/getItems.php", {
+          ID: id,
         })
       ).data;
       return data;
@@ -52,7 +57,10 @@ const App: Component = () => {
   const query = createQuery<response>(() => ["getItem"], fetchAgendaItem, {
     onSuccess: (data) => {
       if (data.Success == false && data.error?.title == "NOT LOGGEDIN") {
-        navigate("/");
+        navigate(PRIMDIR + "/");
+      }
+      if (data.Success == false && data.error?.title == "NO RESULTS") {
+        navigate(PRIMDIR + "/agenda");
       }
     },
   });
@@ -74,7 +82,7 @@ const App: Component = () => {
           <div
             title="Uitnodigen voor agendapunt"
             onClick={() => {
-              navigate(PRIMDIR + "/agenda/item/" + params.id + "/invite");
+              setInviteModelShow(true);
             }}
             class={Styles.Invite}
           >
@@ -92,35 +100,47 @@ const App: Component = () => {
           <div
             title="Verwijder agendapunt"
             onClick={() => {
-              navigate(PRIMDIR + "/agenda");
+              setRemoveModelShow(true);
             }}
             class={Styles.Bin}
           >
             <img src={Bin} alt="Verwijder agendapunt" />
           </div>
-          <Model
-            title="test"
-            close={() => {
-              console.log("wfiofweoho");
-            }}
-          >
-            <h1>TEST - feoijewhiogerwigerohiu</h1>
-          </Model>
+
           <Switch>
             <Match when={query.isLoading}>
               <p style="text-align: center">Data aan het laden...</p>
             </Match>
             <Match when={query.isError}>
-              <p style="text-align: center">
+              <p style="text-align: center; color: red;">
                 Er ging iets fout probeer het later opnieuw...
               </p>
             </Match>
             <Match when={query.isSuccess}>
               <Switch>
-                <Match when={query.data?.Success == false && false}>
-                  <p style="text-align: center">{query.data?.error?.message}</p>
+                <Match when={query.data?.Success == false}>
+                  <p style="text-align: center; color: red;">
+                    {query.data?.error?.message}
+                  </p>
                 </Match>
-                <Match when={query.data?.Success == true || true}>
+                <Match when={error() != ""}>
+                  <p style="text-align: center; color: red;">{error}</p>
+                </Match>
+                <Match when={query.data?.Success == true}>
+                  <InviteModel
+                    itemID={id}
+                    openModel={inviteModelShow()}
+                    onClose={() => {
+                      setInviteModelShow(false);
+                    }}
+                  />
+                  <DeleteModel
+                    itemID={id}
+                    openModel={removeModelShow()}
+                    onClose={() => {
+                      setRemoveModelShow(false);
+                    }}
+                  />
                   <h1 class={Styles.Title}>
                     {query.data?.data?.Subject} -{" "}
                     <Switch>
@@ -138,10 +158,10 @@ const App: Component = () => {
                   <hr />
                   <div class={Styles.Date}>
                     <h3 class={Styles.FancyText}>
-                      {query.data?.data?.BeginDate.toDateString()}
+                      {query.data?.data?.BeginDate}
                     </h3>
                     <h3 class={Styles.FancyText} style="text-align: right">
-                      {query.data?.data?.EndDate.toDateString()}
+                      {query.data?.data?.EndDate}
                     </h3>
                   </div>
                   <p class={Styles.Priority}>

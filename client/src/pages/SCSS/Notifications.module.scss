@@ -17,29 +17,27 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      tbody {
-        tr {
+      border: 1px solid #ddd;
+      th {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+        &:first-child {
+          width: 80%;
+        }
+        &:last-child {
+          width: 20%;
+        }
+        .AcceptButton {
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          padding: 2px;
+          text-decoration: none;
+          margin: 4px 2px;
           cursor: pointer;
-          border-spacing: 15px;
-          border-top: 1px black solid;
-          @media (prefers-color-scheme: dark) {
-            border-top: 1px white solid;
-          }
-          th {
-            button {
-              /** accept invite button */
-              background-color: #00b300;
-              color: white;
-              border: none;
-              border-radius: 5px;
-              padding: 5px;
-              font-size: 1rem;
-              font-weight: bold;
-              cursor: pointer;
-              &:hover {
-                background-color: #00e600;
-              }
-            }
+          &:hover {
+            background-color: #3e8e41;
           }
         }
       }

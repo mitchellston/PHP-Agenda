@@ -27,6 +27,7 @@ const Notification: Component<Props> = (props) => {
           <h1 class={Styles.ModelTitle}>{props.title}</h1>
           <button
             class={Styles.ModelClose}
+            title="Sluiten"
             onClick={() => {
               props.close();
             }}

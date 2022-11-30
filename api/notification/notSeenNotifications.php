@@ -6,7 +6,10 @@ try {
     require_once "../config.php";
     require_once "../loggedinConfig.php";
     require_once "./automaticDelete.php";
-    $result = $databaseConnection->select(["Seen"], "notifications", [["column" => "ToUser", "method" => CompareMethods::equals, "value" => ["value" => $_SESSION["User"], "type" => PropertyTypes::int]]], null);
+    $result = $databaseConnection->select(["Seen"], "notifications", [
+        ["column" => "ToUser", "method" => CompareMethods::equals, "value" => ["value" => $_SESSION["User"], "type" => PropertyTypes::int]],
+        ["column" => "Seen", "method" => CompareMethods::equals, "value" => ["value" => 0, "type" => PropertyTypes::int]]
+    ], null);
     echo json_encode(["Success" => true, "data" => count($result)]);
 
 } catch (Exception $err) {

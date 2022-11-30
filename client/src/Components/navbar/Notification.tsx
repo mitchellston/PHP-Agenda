@@ -21,7 +21,11 @@ const Notification: Component = () => {
     () => ["amountOfNotificationsQuery"],
     async () => {
       try {
-        const data: response = await (await axios.post("")).data;
+        const data: response = await (
+          await axios.post(
+            PRIMDIR + "/api/notification/notSeenNotifications.php"
+          )
+        ).data;
         if (data.Success == true) {
           setAmountOfNotifications(data.data);
           return;

@@ -74,6 +74,6 @@ try {
     }
     echo json_encode(["Success" => true]);
 } catch (Exception $err) {
-    echo json_encode(["Success" => false, "error" => ["title" => "...", "message" => "Er ging iets fout probeer het later opnieuw!" . $err]]);
+    echo json_encode(["Success" => false, "error" => ["title" => "...", "message" => "Er ging iets fout probeer het later opnieuw!"]]);
     exit;
 }
