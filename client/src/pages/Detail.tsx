@@ -12,6 +12,7 @@ import { PRIMDIR } from "../../DIRECTORIES";
 import Model from "../Components/models/Model";
 import InviteModel from "../Components/models/InviteModel";
 import DeleteModel from "../Components/models/DeleteModel";
+import { htmlEntities } from "../functions/htmlEntities";
 type response = {
   Success: boolean;
   error?: {
@@ -142,7 +143,7 @@ const App: Component = () => {
                     }}
                   />
                   <h1 class={Styles.Title}>
-                    {query.data?.data?.Subject} -{" "}
+                    {htmlEntities(query.data?.data?.Subject)} -{" "}
                     <Switch>
                       <Match when={query.data?.data?.Status == "n"}>
                         Niet begonnen
@@ -167,7 +168,7 @@ const App: Component = () => {
                   <p class={Styles.Priority}>
                     Prioriteit: {query.data?.data?.Priority}
                   </p>
-                  <p>{query.data?.data?.Content}</p>
+                  <p>{htmlEntities(query.data?.data?.Content)}</p>
                 </Match>
               </Switch>
             </Match>

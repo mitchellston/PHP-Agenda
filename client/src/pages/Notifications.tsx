@@ -6,6 +6,7 @@ import { useNavigate } from "@solidjs/router";
 import axios from "axios";
 import NavBar from "../Components/navbar/NavBar";
 import { PRIMDIR } from "../../DIRECTORIES";
+import { htmlEntities } from "../functions/htmlEntities";
 type response = {
   Success: boolean;
   error?: {
@@ -124,7 +125,7 @@ const App: Component = () => {
                             <Switch>
                               <Match when={Item.Subject != null}>
                                 <th>
-                                  {Item.Message} |{" "}
+                                  {htmlEntities(Item.Message)} |{" "}
                                   <button
                                     onClick={async () => {
                                       acceptInvite(Item.ID);

@@ -6,6 +6,7 @@ import { useNavigate } from "@solidjs/router";
 import axios from "axios";
 import NavBar from "../Components/navbar/NavBar";
 import { PRIMDIR } from "../../DIRECTORIES";
+import { htmlEntities } from "../functions/htmlEntities";
 type response = {
   Success: boolean;
   error?: {
@@ -86,8 +87,8 @@ const App: Component = () => {
                               navigate(PRIMDIR + "/agenda/item/" + Item.ID);
                             }}
                           >
-                            <th>{Item.Subject}</th>
-                            <th>{Item.Content}</th>
+                            <th>{htmlEntities(Item.Subject)}</th>
+                            <th>{htmlEntities(Item.Content)}</th>
                           </tr>
                         )}
                       </For>

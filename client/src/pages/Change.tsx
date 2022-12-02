@@ -7,6 +7,7 @@ import CalanderConfirm from "../icons/CalanderConfirm.svg";
 import NavBar from "../Components/navbar/NavBar";
 import Styles from "./SCSS/Change.module.scss";
 import { PRIMDIR } from "../../DIRECTORIES";
+import { htmlEntities } from "../functions/htmlEntities";
 type response = {
   Success: boolean;
   error?: {
@@ -198,7 +199,8 @@ const App: Component = () => {
                 <Match when={query.data?.Success == true}>
                   <form>
                     <h1 class={Styles.Title}>
-                      Uw bent kalenderitem {query.data?.data?.Subject} aan het
+                      Uw bent kalenderitem{" "}
+                      {htmlEntities(query.data?.data?.Subject)} aan het
                       aanpassen!
                     </h1>
                     <p class={Styles.Error}>{generalError}</p>
@@ -208,7 +210,7 @@ const App: Component = () => {
                       <input
                         type="text"
                         ref={subject}
-                        value={query.data?.data?.Subject}
+                        value={htmlEntities(query.data?.data?.Subject)}
                         tabIndex={1}
                         maxLength={30}
                         placeholder="Onderwerp"
@@ -290,7 +292,7 @@ const App: Component = () => {
                         tabIndex={6}
                         ref={content}
                         placeholder="Inhoud"
-                        value={query.data?.data?.Content}
+                        value={htmlEntities(query.data?.data?.Content)}
                       />
                     </div>
                   </form>
